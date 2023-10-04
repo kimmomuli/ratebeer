@@ -1,0 +1,24 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Beers</h1>
+
+<p>Number of beers: <%= @beers.count %></p>
+
+<% @beers.each do |beer| %>
+  <p>
+    <strong>Name:</strong>
+    <%= link_to beer.name, beer %>
+  </p>
+
+  <p>
+    <strong>Style:</strong>
+    <%= beer.style %>
+  </p>
+
+  <p>
+    <strong>Brewery</strong>
+    <%=link_to beer.brewery.name, beer.brewery %>
+  </p>
+<% end %>
+
+<%= link_to "Back to breweries", breweries_path %>
