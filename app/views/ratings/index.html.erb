@@ -1,0 +1,16 @@
+<h2>List of ratings</h2>
+
+<%= link_to 'Add a new rating', new_rating_path %>
+
+<ul>
+<% @ratings.each do |rating| %>
+  <li>
+    <% if rating.beer %>
+      <%= rating.to_s %>
+    <% else %>
+      No ratings: <%= rating.id %>
+    <% end %>
+    <%= button_to 'delete', rating, method: :delete, form: { data: { 'turbo-confirm': 'Are you sure?' } } %>
+  </li>
+<% end %>
+</ul>
