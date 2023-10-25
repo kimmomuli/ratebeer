@@ -1,0 +1,15 @@
+<h1>Join a Beer Club</h1>
+
+<% @available_beer_clubs.each do |club| %>
+  <%= form_with(model: Membership.new, url: memberships_path, method: :post) do |form| %>
+    <div>
+      <%= club.name %>
+      <%= form.hidden_field :beer_club_id, value: club.id %>
+      <%= form.submit "Join" %>
+    </div>
+  <% end %>
+<% end %>
+
+<div>
+  <%= link_to "Back to memberships", memberships_path %>
+</div>
