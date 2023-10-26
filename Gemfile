@@ -74,6 +74,7 @@ end
 
 group :development, :test do
   gem 'sqlite3'
+  gem 'rubocop', require: false
 end
 
 group :production do
