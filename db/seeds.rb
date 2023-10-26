@@ -16,3 +16,18 @@ b2.beers.create name: "Huvila Pale Ale", style: "Pale Ale"
 b2.beers.create name: "X Porter", style: "Porter"
 b3.beers.create name: "Hefeweizen", style: "Weizen"
 b3.beers.create name: "Helles", style: "Lager"
+
+c1 = BeerClub.create name: "Helsinki Beer Lovers", founded: 2010, city: "Helsinki"
+c2 = BeerClub.create name: "Tampere Brew Enthusiasts", founded: 2015, city: "Tampere"
+
+u1 = User.create username: "john_doe", password_digest: "johndoe123"
+u2 = User.create username: "jane_smith", password_digest: "janesmith456"
+
+Membership.create beer_club: c1, user: u1
+Membership.create beer_club: c2, user: u2
+
+beer1 = Beer.find_by(name: "Iso 3")
+beer2 = Beer.find_by(name: "Huvila Pale Ale")
+
+Rating.create score: 5, beer: beer1, user: u1
+Rating.create score: 4, beer: beer2, user: u2
