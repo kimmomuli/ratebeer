@@ -34,6 +34,6 @@ class User < ApplicationRecord
   def favorite_beer
     return nil if ratings.empty?   # palautetaan nil jos reittauksia ei ole
 
-    ratings.sort_by(&:score).last.beer             # palataan ensimmaiseen reittaukseen liittyvä olut
+    ratings.max_by(&:score).beer # palataan ensimmaiseen reittaukseen liittyvä olut
   end
 end
