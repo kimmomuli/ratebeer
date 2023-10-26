@@ -10,8 +10,8 @@ class Brewery < ApplicationRecord
 
   def year_must_be_valid
     current_year = Time.now.year
-    unless year.is_a?(Integer) && year >= 1040 && year <= current_year
-      errors.add(:year, "must be an integer between 1040 and #{current_year}")
-    end
+    return if year.is_a?(Integer) && year >= 1040 && year <= current_year
+
+    errors.add(:year, "must be an integer between 1040 and #{current_year}")
   end
 end

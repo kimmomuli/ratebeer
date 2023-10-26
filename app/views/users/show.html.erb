@@ -2,6 +2,14 @@
 
 <%= render @user %>
 
+<p>Favorite Style: <%= @user.favorite_style %></p>
+
+<% if @user.favorite_brewery %>
+  <p>Favorite Brewery: <%= @user.favorite_brewery.name %></p>
+<% else %>
+  <p>No favorite brewery yet.</p>
+<% end %>
+
 <h3>Member of</h3>
 <ul>
   <% @user.beer_clubs.each do |club| %>
@@ -19,7 +27,8 @@
   <% @user.ratings.each do |rating| %>
     <li><%= "#{rating.to_s}" %>
       <% if @user == current_user %>
-        <%= link_to "Delete", rating, data: {turbo_method: :delete}, data: { confirm: 'Are you sure?' } %>
+        <%= link_to "Delete", rating, data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class: "delete-rating-link" %>
+
       <% end %>
     </li>
   <% end %>

@@ -38,16 +38,16 @@ class UsersController < ApplicationController
   def update
     if current_user == User.find(params[:id])
       respond_to do |format|
-      if user_params[:username].nil? and @user == current_user and @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        if user_params[:username].nil? && @user == current_user && @user.update(user_params)
+          format.html { redirect_to @user, notice: 'User was successfully updated.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: 'edit' }
+          format.json { render json: @user.errors, status: :unprocessable_entity }
+        end
       end
-    end
     else
-      redirect_to root_path, notice: "You cannot edit another user\'s details!"
+      redirect_to root_path, notice: "You cannot edit another user's details!"
     end
   end
 
