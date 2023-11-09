@@ -7,9 +7,9 @@
 name: "Ruby on Rails CI"
 on:
   push:
-    branches: [ "main" ] # Jos repositoriosi päähaara ei ole main, muuta nämä
+    branches: ["main"] # Jos repositoriosi päähaara ei ole main, muuta nämä
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 jobs:
   test:
     runs-on: ubuntu-22.04
@@ -25,10 +25,11 @@ jobs:
     env:
       RAILS_ENV: test
       DATABASE_URL: "postgres://rails:password@localhost:5432/rails_test"
+      BEERMAPPING_APIKEY: ${{ secrets.BEERMAPPING_APIKEY }}
+      WEATHERSTACK_APIKEY: ${{ secrets.WEATHERSTACK_APIKEY }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      # Add or replace dependency steps here
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1
         with:

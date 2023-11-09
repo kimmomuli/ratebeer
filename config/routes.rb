@@ -17,5 +17,9 @@ Rails.application.routes.draw do
   resource :session, only: [:new, :create, :destroy]
 
   resources :memberships, only: [:new, :create]
+  
+  resources :places, only: [:index, :show]
+  post 'places', to: 'places#search'
 
+  resources :styles
 end

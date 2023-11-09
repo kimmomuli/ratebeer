@@ -9,6 +9,8 @@ class BeersController < ApplicationController
 
   # GET /beers/1 or /beers/1.json
   def show
+    @rating = Rating.new
+    @rating.beer = @beer
   end
 
   # GET /beers/new
@@ -19,7 +21,7 @@ class BeersController < ApplicationController
   # GET /beers/1/edit
   def edit
     @breweries = Brewery.all
-    @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter", "Lowalcohol"]
+    @styles = Style.all
   end
 
   # POST /beers or /beers.json
@@ -72,11 +74,11 @@ class BeersController < ApplicationController
 
   def set_breweries_and_styles_for_template
     @breweries = Brewery.all
-    @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter", "Lowalcohol"]
+    @styles = Style.all
   end
 
   # Only allow a list of trusted parameters through.
   def beer_params
-    params.require(:beer).permit(:name, :style, :brewery_id)
+    params.require(:beer).permit(:name, :brewery_id, :style_id)
   end
 end

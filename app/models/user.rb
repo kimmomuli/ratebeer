@@ -18,8 +18,8 @@ class User < ApplicationRecord
   def favorite_style
     return nil if ratings.empty?
 
-    style_ratings = ratings.joins(:beer).group('beers.style').average(:score)
-    style_ratings.max_by { |_style, avg_rating| avg_rating }[0]
+    style_ratings = ratings.joins(beer: :style).group('styles.name').average('ratings.score')
+    style_ratings.max_by { |_style, avg_rating| avg_rating }&.first
   end
 
   def favorite_brewery
@@ -32,8 +32,8 @@ class User < ApplicationRecord
   end
 
   def favorite_beer
-    return nil if ratings.empty?   # palautetaan nil jos reittauksia ei ole
+    return nil if ratings.empty?
 
-    ratings.max_by(&:score).beer # palataan ensimmaiseen reittaukseen liittyvä olut
+    ratings.order(score: :desc).first.beer
   end
 end

@@ -1,5 +1,6 @@
 class MembershipsController < ApplicationController
-  before_action :set_membership, only: %i[show edit update destroy]
+  before_action :set_membership, only: [:show, :edit, :update, :destroy]
+  before_action :ensure_that_signed_in, only: [:new, :create, :destroy]
 
   # GET /memberships or /memberships.json
   def index
@@ -25,33 +26,35 @@ class MembershipsController < ApplicationController
     @membership = Membership.new(membership_params)
     @membership.user = current_user
 
-    if @membership.save
-      redirect_to beer_club_path(@membership.beer_club), notice: "You successfully joined the beer club!"
-    else
-      render :new
-    end
-  end
-
-  # PATCH/PUT /memberships/1 or /memberships/1.json
-  def update
     respond_to do |format|
-      if @membership.update(membership_params)
-        format.html { redirect_to membership_url(@membership), notice: "Membership was successfully updated." }
-        format.json { render :show, status: :ok, location: @membership }
+      if @membership.save
+        format.html { redirect_to beer_club_path(@membership.beer_club), notice: "#{current_user.username} welcome to the club!" }
+        format.json { render :show, status: :created, location: @membership }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { render :new }
         format.json { render json: @membership.errors, status: :unprocessable_entity }
       end
     end
   end
 
+  # PATCH/PUT /memberships/1 or /memberships/1.json
+  def update
+    if @membership.update(membership_params)
+      redirect_to @membership, notice: 'Membership was successfully updated.'
+    else
+      render :edit
+    end
+  end
+
   # DELETE /memberships/1 or /memberships/1.json
   def destroy
-    @membership.destroy
-
-    respond_to do |format|
-      format.html { redirect_to memberships_url, notice: "Membership was successfully destroyed." }
-      format.json { head :no_content }
+    @membership = Membership.find(params[:id])
+    beer_club = @membership.beer_club
+    if current_user == @membership.user
+      @membership.destroy
+      redirect_to user_path(current_user), notice: 'Membership was successfully destroyed.'
+    else
+      redirect_to beer_club, alert: 'Only membership owner can destroy membership'
     end
   end
 
@@ -64,6 +67,10 @@ class MembershipsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def membership_params
-    params.require(:membership).permit(:beer_club_id)
+    params.require(:membership).permit(:beer_club_id, :user_id, :id)
+  end
+
+  def ensure_that_signed_in
+    redirect_to signin_path, alert: 'You must be signed in' unless current_user
   end
 end

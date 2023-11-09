@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe 'Beers', type: :feature do
+  let!(:style) { FactoryBot.create(:style, name: "Lager") }
+  
   before :each do
     FactoryBot.create(:brewery, name: "Koff")
   end
@@ -9,7 +11,7 @@ describe 'Beers', type: :feature do
     visit new_beer_path
 
     fill_in('beer[name]', with: 'Koff III')
-    select('Lager', from: 'beer[style]')
+    select('Lager', from: 'beer[style_id]')
     select('Koff', from: 'beer[brewery_id]')
     
     click_button('Create Beer')
@@ -22,7 +24,7 @@ describe 'Beers', type: :feature do
     visit new_beer_path
 
     fill_in('beer[name]', with: '')
-    select('Lager', from: 'beer[style]')
+    select('Lager', from: 'beer[style_id]')
     select('Koff', from: 'beer[brewery_id]')
 
     click_button('Create Beer')

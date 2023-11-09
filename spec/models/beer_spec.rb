@@ -1,10 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Beer, type: :model do
-  let(:brewery) { Brewery.create(name: "Test Brewery", year: 2000) }
+  let(:brewery) { FactoryBot.create(:brewery) }
+  let(:style) { FactoryBot.create(:style) }
 
   describe "when initialized with a name, style, and brewery" do
-    let(:beer) { Beer.new(name: "Test Beer", style: "Lager", brewery: brewery) }
+    let(:beer) { Beer.new(name: "Test Beer", style: style, brewery: brewery) }
 
     it "is saved to the database" do
       expect(beer.save).to be(true)
@@ -13,7 +14,7 @@ RSpec.describe Beer, type: :model do
   end
 
   describe "when initialized without a name" do
-    let(:beer) { Beer.new(style: "Lager", brewery: brewery) }
+    let(:beer) { Beer.new(style: style, brewery: brewery) }
 
     it "is not saved to the database" do
       expect(beer.save).to be(false)

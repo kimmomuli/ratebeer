@@ -9,6 +9,11 @@ class BeerClubsController < ApplicationController
 
   # GET /beer_clubs/1 or /beer_clubs/1.json
   def show
+    @beer_club = BeerClub.find(params[:id])
+
+    return unless current_user
+
+    @membership = current_user.memberships.find_by(beer_club: @beer_club)
   end
 
   # GET /beer_clubs/new
