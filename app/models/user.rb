@@ -15,6 +15,10 @@ class User < ApplicationRecord
   has_many :memberships, dependent: :destroy
   has_many :beer_clubs, through: :memberships
 
+  def self.top(num)
+    User.all.max_by(num) { |user| user.ratings.count }
+  end
+
   def favorite_style
     return nil if ratings.empty?
 

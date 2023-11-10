@@ -1,6 +1,14 @@
-<p style="color: green"><%= notice %></p>
-
 <%= render @user %>
+
+<% if current_user && current_user.admin? %>
+  <% if @user.account_closed? %>
+    <%= button_to "Open account", open_account_user_path(@user), data: { turbo_method: :post, turbo_confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+  <% else %>
+    <%= button_to "Close account", close_account_user_path(@user), data: { turbo_method: :post, turbo_confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+  <% end %>
+<% end %>
+
+
 
 <p>Favorite Style: <%= @user.favorite_style %></p>
 

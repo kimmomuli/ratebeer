@@ -1,27 +1,33 @@
-<p style="color: green"><%= notice %></p>
-
 <h1>Beers</h1>
 
 <p>Number of beers: <%= @beers.count %></p>
 
-<% @beers.each do |beer| %>
-  <p>
-    <strong>Name:</strong>
-    <%= link_to beer.name, beer %>
-  </p>
+<table class="table table-hover table-striped">
+  <thead>
+    <tr>
+      <th>Beer</th>
+      <th>Style</th>
+      <th>Brewery</th>
+      <th>Rating</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @beers.each do |beer| %>
+      <tr id="<%= dom_id beer %>">
+        <td><%= link_to beer.name, beer %></td>
+        <td><%= link_to beer.style.name, beer.style %></td> 
+        <td><%= link_to beer.brewery.name, beer.brewery %></td>
+        <td>
+          <% if beer.ratings.empty? %>
+            Not rated
+          <% else %>
+            <%= '%.1f' % beer.ratings.average(:score) %> 
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
-  <p>
-    <strong>Style:</strong>
-    <%= beer.style.name %>
-  </p>
-
-  <p>
-    <strong>Brewery</strong>
-    <%=link_to beer.brewery.name, beer.brewery %>
-  </p>
-
-
-<% end %>
-
-<%= link_to('New Beer', new_beer_path) if current_user %>
-<%= link_to "List of breweries", breweries_path %> 
+<%= link_to('New Beer', new_beer_path, class:'btn btn-primary') if current_user %>
+<%= link_to "List of breweries", breweries_path, class:'btn btn-secondary' %>

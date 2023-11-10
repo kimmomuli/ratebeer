@@ -1,4 +1,5 @@
 class BeerClubsController < ApplicationController
+  before_action :ensure_that_admin, only: [:destroy]
   before_action :set_beer_club, only: %i[show edit update destroy]
   before_action :ensure_that_signed_in, except: [:index, :show]
 
@@ -73,5 +74,9 @@ class BeerClubsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def beer_club_params
     params.require(:beer_club).permit(:name, :founded, :city)
+  end
+
+  def ensure_that_admin
+    redirect_to breweries_path, notice: 'Only admins can do that' unless current_user.admin?
   end
 end

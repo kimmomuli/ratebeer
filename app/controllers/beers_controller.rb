@@ -1,4 +1,5 @@
 class BeersController < ApplicationController
+  before_action :ensure_that_admin, only: [:destroy]
   before_action :set_beer, only: %i[show edit update destroy]
   before_action :set_breweries_and_styles_for_template, only: [:new, :edit, :create]
 
@@ -80,5 +81,9 @@ class BeersController < ApplicationController
   # Only allow a list of trusted parameters through.
   def beer_params
     params.require(:beer).permit(:name, :brewery_id, :style_id)
+  end
+
+  def ensure_that_admin
+    redirect_to breweries_path, notice: 'Only admins can do that' unless current_user.admin?
   end
 end

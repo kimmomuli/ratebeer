@@ -1,4 +1,6 @@
 class StylesController < ApplicationController
+  before_action :ensure_that_admin, only: [:destroy]
+
   def index
     @styles = Style.all
   end
@@ -48,5 +50,9 @@ class StylesController < ApplicationController
 
   def style_params
     params.require(:style).permit(:name, :description)
+  end
+
+  def ensure_that_admin
+    redirect_to breweries_path, notice: 'Only admins can do that' unless current_user.admin?
   end
 end

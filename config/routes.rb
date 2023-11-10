@@ -22,4 +22,16 @@ Rails.application.routes.draw do
   post 'places', to: 'places#search'
 
   resources :styles
+
+  resources :breweries do
+    post 'toggle_activity', on: :member
+  end
+
+  resources :users do
+    member do
+      post :close_account
+      post :open_account
+    end
+  end
+
 end

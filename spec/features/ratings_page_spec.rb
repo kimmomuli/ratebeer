@@ -67,8 +67,8 @@ describe "Rating" do
     it 'all ratings and their total number are shown on the ratings page' do
       visit ratings_path
 
-      expect(page).to have_content 'iso 3 10 by Pekka'
-      expect(page).to have_content 'Number of ratings: 2'
+      expect(page).to have_content 'iso 3 10'
+      expect(page).to have_content 'Karhu 20'
     end
 
     it "only user's own ratings are shown on user's page" do

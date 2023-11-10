@@ -1,10 +1,14 @@
 class Brewery < ApplicationRecord
   include RatingAverage
+  include TopRatingCalculations
 
   validates :name, presence: true
   validate :year_must_be_valid
   has_many :beers, dependent: :destroy
   has_many :ratings, through: :beers
+
+  scope :active, -> { where active: true }
+  scope :retired, -> { where active: [nil, false] }
 
   private
 

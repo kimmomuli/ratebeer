@@ -14,7 +14,7 @@ describe 'Beers', type: :feature do
     select('Lager', from: 'beer[style_id]')
     select('Koff', from: 'beer[brewery_id]')
     
-    click_button('Create Beer')
+    click_button('Save Beer') 
 
     expect(page).to have_content 'Beer was successfully created.'
     expect(Beer.count).to eq(1)
@@ -27,7 +27,7 @@ describe 'Beers', type: :feature do
     select('Lager', from: 'beer[style_id]')
     select('Koff', from: 'beer[brewery_id]')
 
-    click_button('Create Beer')
+    click_button('Save Beer') 
 
     expect(page).to have_content "Name can't be blank"
     expect(Beer.count).to eq(0)

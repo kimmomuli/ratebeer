@@ -1,17 +1,85 @@
-<h2>List of ratings</h2>
+<h1>Ratings</h1>
+<div class="row">
+  <div class="col-md-4">
+    <h2>Best beers</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Beer</th>
+          <th>Average</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @top_beers.each do |beer| %>
+          <tr>
+            <td><%= beer.name %></td>
+            <td><%= round(beer.average_rating) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  
+  <div class="col-md-4">
+    <h2>Best breweries</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Brewery</th>
+          <th>Average</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @top_breweries.each do |brewery| %>
+          <tr>
+            <td><%= brewery.name %></td>
+            <td><%= round(brewery.average_rating) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  
+  <div class="col-md-4">
+    <h2>Best styles</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Style</th>
+          <th>Average</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @top_styles.each do |style| %>
+          <tr>
+            <td><%= style.name %></td>
+            <td><%= round(style.average_rating) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
 
-<ul>
-<% @ratings.each do |rating| %>
-  <li>
-    <% if rating.beer %>
-      <%= rating.to_s %> by <%= link_to rating.user.username, user_path(rating.user) %>
-    <% else %>
-      No ratings: <%= rating.id %>
-    <% end %>
-  </li>
-<% end %>
-</ul>
+<div class="row">
+  <div class="col-md-6">
+    <h2>Most active users</h2>
+    <ol>
+      <% @top_users.each do |user| %>
+        <li><%= user.username %> <%= user.ratings.count %> ratings</li>
+      <% end %>
+    </ol>
+  </div>  
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <h2>Recent ratings</h2>
+    <ul>
+      <% @recent_ratings.each do |rating| %>
+        <li><%= rating.beer.name %> <%= rating.score %> <%= rating.created_at.strftime("%Y-%m-%d %H:%M:%S UTC") %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
 
-<p>Number of ratings: <%= @ratings.count %></p>
-
-<%= link_to 'Add a new rating', new_rating_path %>
+<%= link_to 'Add a new rating', new_rating_path, class: 'btn btn-primary' %>

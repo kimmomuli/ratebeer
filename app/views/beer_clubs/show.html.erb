@@ -1,5 +1,3 @@
-<p style="color: green"><%= notice %></p>
-
 <%= render @beer_club %>
 
 <strong>Jäsenet:</strong>
@@ -25,7 +23,8 @@
 
 
 <div>
-  <%= link_to "Edit this beerclub", edit_beer_club_path(@beer_club) %> |
-  <%= link_to "back to beerclubs", beer_clubs_path %>
-  <%= button_to "Destroy this beerclub", @beer_club, method: :delete %>
+<%= edit_and_destroy_buttons(@beer_club) %>
+    <% if current_user&.admin? %>
+      <%= button_to "Destroy this beer_club", @beer_club, method: :delete, class: "btn btn-danger"  %>
+    <% end %>
 </div>

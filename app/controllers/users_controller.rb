@@ -62,6 +62,26 @@ class UsersController < ApplicationController
     end
   end
 
+  def close_account
+    @user = User.find(params[:id])
+    if current_user.admin?
+      @user.update_column(:account_closed, true)
+      redirect_to users_path, notice: "Account has been closed."
+    else
+      redirect_to users_path, alert: "You are not authorized to perform this action."
+    end
+  end
+
+  def open_account
+    @user = User.find(params[:id])
+    if current_user.admin?
+      @user.update_column(:account_closed, false)
+      redirect_to users_path, notice: "Account has been opened."
+    else
+      redirect_to users_path, alert: "You are not authorized to perform this action."
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

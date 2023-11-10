@@ -10,23 +10,32 @@
       </ul>
     </div>
   <% end %>
-
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+  <div class="mb-3">
+    <%= form.label :name, class: 'form-label' %>
+    <%= form.text_field :name, class: 'form-control', required: true %>
+    <div class="invalid-feedback">
+      Please provide a name for the beer club.
+    </div>
   </div>
 
-  <div>
-    <%= form.label :founded, style: "display: block" %>
-    <%= form.number_field :founded %>
+  <div class="mb-3">
+    <%= form.label :founded, class: 'form-label' %>
+    <%= form.number_field :founded, class: 'form-control', required: true %>
+    <div class="invalid-feedback">
+      Please provide a founding year.
+    </div>
   </div>
 
-  <div>
-    <%= form.label :city, style: "display: block" %>
-    <%= form.text_field :city %>
+  <div class="mb-3">
+    <%= form.label :city, class: 'form-label' %>
+    <%= form.text_field :city, class: 'form-control', required: true %>
+    <div class="invalid-feedback">
+      Please provide a city.
+    </div>
   </div>
 
+
   <div>
-    <%= form.submit %>
+    <%= form.submit "Create Beer Club", class: 'btn btn-primary' %>
   </div>
 <% end %>
